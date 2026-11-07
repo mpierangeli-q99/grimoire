@@ -1,5 +1,9 @@
 # grimoire — how we work with Claude Code at Q99
 
+> **grimoire** /ɡrɪmˈwɑːr/ — *a book of spells: instructions for making magic work.*
+
+Why the name: this is esoteric stuff. A pile of rules and rituals that, put together, make the AI work almost like magic. Nobody knows exactly why. But it works very well for me.
+
 Pier's way of working with Claude Code, packed as a plugin so every Q99 developer gets the same rules. Each rule started as a correction he gave Claude and kept with its reason, so it is never needed twice.
 
 ## Install
@@ -91,3 +95,19 @@ What this way of working has produced so far:
 ## Growing it
 
 When Claude gets corrected, `capture-feedback` saves the rule with its reason. Rules that hold across projects get promoted here by PR.
+
+## Rules for you (not for the AI) · Reglas para vos (no para la IA)
+
+This isn't a skill. It's for the person working with the AI.
+
+**English**
+
+1. **Argue with everything.** Question everything until you're happy.
+2. **Ask yourself if you're happy with the result it's giving you.** You have to be happy with the process you're having, and want to work that way all day long.
+3. **Never forget that users are idiots.** They will always do the worst possible thing to ruin your life.
+
+**Español**
+
+1. **Discutile todo.** Cuestionale todo, hasta que estés contento.
+2. **Preguntate si estás contento con el resultado que te está dando.** Tenés que ser feliz con el proceso que estás teniendo, y tener ganas de trabajar todo el día de ese modo.
+3. **Nunca te olvides de que los usuarios son idiotas.** Siempre van a hacer lo peor posible para joderte la vida.
