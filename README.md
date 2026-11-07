@@ -1,6 +1,6 @@
 # grimoire — how we work with Claude Code at Q99
 
-Martin's way of working with Claude Code, packed as a plugin so every Q99 developer gets the same rules. Each rule started as a correction he gave Claude and kept with its reason, so it is never needed twice.
+Pier's way of working with Claude Code, packed as a plugin so every Q99 developer gets the same rules. Each rule started as a correction he gave Claude and kept with its reason, so it is never needed twice.
 
 ## Install
 
@@ -13,7 +13,7 @@ The skills load by themselves when the task matches.
 
 A short `SessionStart` hook adds the few rules that must always apply (one item at a time, name your picks, commit only when asked; see `plugins/grimoire/hooks/session-start.md`) to every session. To turn it off, disable the plugin with `/plugin`.
 
-## How Martin works
+## How Pier works
 
 Read this before the skills. The skills hold the rules; this section explains the stance behind them, so you can apply them with judgement instead of mechanically.
 
