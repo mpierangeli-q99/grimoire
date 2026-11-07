@@ -1,113 +1,213 @@
-# grimoire — how we work with Claude Code at Q99
+<p align="center">
+  <img src="assets/logo.png" alt="grimoire" width="200">
+</p>
 
-> **grimoire** /ɡrɪmˈwɑːr/ — *a book of spells: instructions for making magic work.*
+<h1 align="center">grimoire</h1>
 
-Why the name: this is esoteric stuff. A pile of rules and rituals that, put together, make the AI work almost like magic. Nobody knows exactly why. But it works very well for me.
+<p align="center">
+  <b>grimoire</b> /ɡrɪmˈwɑːr/ — <i>a book of spells: instructions for making magic work.</i>
+</p>
 
-Pier's way of working with Claude Code, packed as a plugin so every Q99 developer gets the same rules. Each rule started as a correction he gave Claude and kept with its reason, so it is never needed twice.
+<p align="center">
+  <img src="https://img.shields.io/badge/powered_by-black_magic-8b5cf6?style=for-the-badge" alt="powered by black magic">
+  <img src="https://img.shields.io/badge/works-nobody_knows_why-d4a017?style=for-the-badge" alt="works: nobody knows why">
+  <img src="https://img.shields.io/badge/users-idiots-c0392b?style=for-the-badge" alt="users: idiots">
+  <img src="https://img.shields.io/badge/spells-16-8b5cf6?style=for-the-badge" alt="16 spells">
+</p>
 
-## Install
+<p align="center">
+  <img src="assets/spells.svg" alt="Any sufficiently advanced technology is indistinguishable from magic. — Arthur C. Clarke">
+</p>
+
+This is esoteric stuff. It's a pile of rules and rituals that, put together, make the AI work almost like magic. I don't fully know why. Nobody does. But it works very well for me, so here it is.
+
+Every line in here started the same way: the AI did something dumb, I complained, and we wrote down why. Months of complaining, distilled. You're welcome.
+
+<p align="center"><img src="assets/divider.svg" alt=""></p>
+
+## The only three rules that matter
+
+These aren't for the AI. They're for you.
+
+> [!IMPORTANT]
+> **1. Argue with everything.** Question everything until you're happy.
+>
+> *Discutile todo. Cuestionale todo, hasta que estés contento.*
+
+> [!TIP]
+> **2. Ask yourself if you're happy with the result it's giving you.** You have to be happy with the process you're having, and want to work that way all day long.
+>
+> *Preguntate si estás contento con el resultado que te está dando. Tenés que ser feliz con el proceso que estás teniendo, y tener ganas de trabajar todo el día de ese modo.*
+
+> [!CAUTION]
+> **3. Never forget that users are idiots.** They will always do the worst possible thing to ruin your life.
+>
+> *Nunca te olvides de que los usuarios son idiotas. Siempre van a hacer lo peor posible para joderte la vida.*
+
+Everything below is just those three rules, explained badly.
+
+<p align="center"><img src="assets/divider.svg" alt=""></p>
+
+## Why I work like this
+
+> "He who has a why to live can bear almost any how."
+> — Nietzsche
+
+So this is the why. The how is in the plugin; you don't need to read it.
+
+### 🜂 Doubt everything, especially the AI
+
+> "If you would be a real seeker after truth, it is necessary that at least once in your life you doubt, as far as possible, all things."
+> — Descartes
+
+The AI is brilliant, fast and very confident. Two of those are great. It will tell you "it works" about code it never ran. It will tell you a method is "within 10%" because it tried four examples it liked. So I make it prove things: run it on all the data, open the real browser, show me the before and after. Then I argue anyway.
+
+> "The first principle is that you must not fool yourself — and you are the easiest person to fool."
+> — Richard Feynman
+
+The AI is the second easiest.
+
+### 🜁 One thing at a time
+
+> "The journey of a thousand miles begins with a single step."
+> — Lao Tzu
+
+Not with forty-nine steps at once in one giant diff that nobody reads. Big work becomes a numbered list. It does one item, I look at it, we tick it, next. It feels slower. It's much faster, because nothing has to be redone.
+
+### 🜃 You decide. Always.
+
+> "Man is condemned to be free."
+> — Jean-Paul Sartre
+
+So is the developer. The AI proposes, measures, builds. You decide: the design, the trade-off, the number. And when it decides something on its own (it will), it has to say so: "decisions I made: 40, because…". Otherwise you find out three weeks later that the limit you never chose is now in production.
+
+And when you say "I don't like the texts", it changes **the texts**. Not the whole page. I learned that one the hard way.
+
+### 🜄 Less is more (it took me a long time to write this short)
+
+> "I have made this longer than usual because I have not had time to make it shorter."
+> — Blaise Pascal
+
+> "Perfection is achieved, not when there is nothing more to add, but when there is nothing left to take away."
+> — Antoine de Saint-Exupéry
+
+The AI loves machinery. Ninety lines of custom code where a library does it in twenty. A helper function used exactly once. A comment explaining the history of humanity above a for-loop. No. Smallest thing that works. Use the library. Reasons go in the commit, not in the code.
+
+> "Everything should be made as simple as possible, but not simpler."
+> — Einstein, probably[^einstein]
+
+### ☿ Don't talk about what you didn't check
+
+> "Whereof one cannot speak, thereof one must be silent."
+> — Wittgenstein
+
+If it didn't run, it doesn't "work". If it didn't render, it doesn't "look fine". It says what it checked, what it didn't, and shuts up about the rest.
+
+### 🜍 Remember the users
+
+> "Hell is other people."
+> — Jean-Paul Sartre
+
+> "Anything that can go wrong will go wrong."
+> — Murphy
+
+See rule 3. So we test with fake users who have exactly the wrong permissions, we load-test with many of them, and we try to break our own security before someone else does. A hidden button is not protection. The server says no, or nobody does.
+
+### 🜔 Let someone else try to kill it
+
+Every round ends the same way: other reviewers get the code (not my opinion of it), something tries to prove each finding wrong, and a model from another company reads the diff looking for races and holes. It finds things. It always finds things.
+
+### 🜚 Be happy
+
+> "One must imagine Sisyphus happy."
+> — Albert Camus
+
+You'll push the same rock every day: another bug, another review, another "why did you change that?". That's fine. If the process makes you miserable, change the process. That's rule 2, and it's not a joke. Well, it's a little bit of a joke.
+
+And if it all goes wrong: <kbd>Esc</kbd> <kbd>Esc</kbd>. Rewind. Nobody saw anything.
+
+### 🝆 Write down your mistakes
+
+> "Life can only be understood backwards; but it must be lived forwards."
+> — Kierkegaard
+
+Every time the AI gets corrected, it saves the rule and the reason. Next week the same mistake doesn't happen. This whole repo is that, backwards.
+
+<p align="center"><img src="assets/divider.svg" alt=""></p>
+
+## The ritual
+
+```mermaid
+flowchart TD
+    A([🔮 you ask]) --> B[📖 it reads first]
+    B --> C[📜 a numbered list]
+    C --> D[🧪 one item, tried apart]
+    D --> E[🔍 checked for real]
+    E --> F{😐 happy?}
+    F -- no --> G[🗡️ argue]
+    G --> D
+    F -- yes --> H[✅ next item]
+    H --> D
+    H --> I[⚔️ someone tries to kill it]
+    I --> J([📦 commit, when you say so])
+```
+
+## Does it work?
+
+It found security holes before anyone else did. It caught races the tests missed. It killed optimistic numbers before they reached users. The frontend finally looks like one app. And I mostly stopped repeating myself.
+
+Nobody knows exactly why. That's why it's a grimoire.
+
+<p align="center"><img src="assets/divider.svg" alt=""></p>
+
+<details>
+<summary><b>📦 The boring part: install and what's inside</b></summary>
+
+### Install
 
 ```
 /plugin marketplace add mpierangeli-q99/grimoire
 /plugin install grimoire@grimoire
 ```
 
-The skills load by themselves when the task matches.
-
-A short `SessionStart` hook adds the few rules that must always apply (one item at a time, name your picks, commit only when asked; see `plugins/grimoire/hooks/session-start.md`) to every session. To turn it off, disable the plugin with `/plugin`.
-
-## How Pier works
-
-Read this before the skills. The skills hold the rules; this section explains the stance behind them, so you can apply them with judgement instead of mechanically.
-
-### The stance
-
-Claude works like a senior engineer on the team. It reads widely, proposes, measures and does the work. **The developer keeps the decisions.** Claude never takes a product, UX or architecture call silently, and whatever it did decide on its own, it says so. The developer reads every diff before it becomes a commit.
-
-Speed comes from not redoing work. Doing less at a time is how you get there: one item, checked, then the next.
+The skills load by themselves when the task matches. A short `SessionStart` hook adds the few always-on rules (one item at a time, say what you decided, commit only when asked) to every session; see `plugins/grimoire/hooks/session-start.md`. Don't want it? Disable the plugin with `/plugin`.
 
 ### A normal round
 
-1. **Ask, and let Claude read first.** Claude reads the docs and the changelogs of what it will touch, plus the existing code. It does that before proposing anything.
-2. **Get a plan as a list.** Big work becomes a numbered checklist, often on an artifact page with real examples and, for anything visual, 2–4 versions side by side. You pick.
-3. **One item at a time.** Claude does one item, you check it, and the list gets ticked. "continue" means the last one was fine, do the next.
-4. **Try it apart, then merge.** New ideas are prototyped in a scratchpad, a scratch environment or a side container, on real data. Only when they work do they reach the repo.
-5. **Verify for real.** Run the touched tests and render the screen in a real browser. Test with users that have the right permissions, and measure on all the data. Claude never calls "works" what it didn't run or render.
-6. **Adversarial review.** At the end of the round, independent reviewers look for bugs and a verifier tries to refute each finding. A model from another vendor then reviews the diff. Real findings get fixed with tests.
-7. **Report.** Claude reports what changed, what was checked with results, what it did not check, and a "decisions I made" line for every number or variant you didn't choose.
-8. **Commit when you say so.** Claude commits grouped by area, on the repo's convention. You push.
+1. Read the docs and the code first.
+2. Plan as a numbered list, on a page with real examples and 2–4 versions for anything visual.
+3. One item at a time.
+4. Try it in a scratchpad on real data, then bring it into the repo.
+5. Verify for real: tests, real browser, real permissions, all the data.
+6. Adversarial review.
+7. Report: what changed, what was checked, what wasn't, decisions it made.
+8. Commit when you say so. You push.
 
-### Why the rules exist
-
-Each rule came from a real correction. A few examples, so the reasons are clear:
-
-- **"Change only what was flagged."** The feedback was "I don't like the texts" on a landing page. Claude rebuilt the visuals too, and the visuals were the part that was loved. Read complaints literally, and keep the version that got the reaction.
-- **"Name your own picks."** "Who said a limit of 40 per user? I said queue the runs." Claude had swapped the idea for its own variant and reported it as approved.
-- **"UX trade-offs are the developer's call."** To fix a nav overflow, Claude made the rail icon-only. The discussion that followed produced a better design than either version had.
-- **"Measure on all the data."** A method that was "within 10%" on 4 hand-picked examples held on fewer than a quarter of the full set.
-- **"Cut volume, not retries."** Rate-limit errors got a retry with backoff, and it was rejected at once: "why are we hitting the limit?" One read-merge-write per item was the cause.
-- **"The executor blocks, not our check."** Our own SQL validator was the only thing stopping a model-written query from reading server files. "Impossible" has to mean the engine itself refuses.
-- **"Respect what exists."** A tile on one dashboard looked different from the same tile on another. Users read drift as unfinished work.
-- **"Smallest version first."** A 90-line custom retry transport was replaced by 20 lines around the library: "is all that machinery necessary?"
-- **"No history in comments."** Rationale paragraphs in docstrings made the code harder to read. Reasons belong in the commit.
-
-### What the plugin doesn't carry
-
-- **Project facts** (ports, containers, how to mint a test token, which service to restart) go in each repo's `CLAUDE.md`.
-- **Your own decisions** ("don't re-propose X", "I test the chat myself") build up in your Claude memory through `capture-feedback`.
-
-The plugin is the starting point. Your corrections make it yours.
-
-## Skills
+### The spells
 
 | Skill | When it kicks in |
 |---|---|
-| `working-agreement` | Every task: checklist flow, the human decides, name your picks, subagent briefs, git rules |
+| `working-agreement` | Every task: checklist flow, you decide, name the picks, subagent briefs, git rules |
 | `code-style` | Writing or cleaning code: the cleanup guide, libraries, licences, errors, data rules |
 | `testing-rules` | Tests: contracts not copy, no model names, no tests for switches, targeted runs |
-| `frontend-ui` | UI: no hardcoded sizes, screens fit the window, one look, server-side permissions, help docs |
+| `frontend-ui` | UI: respect what exists, no hardcoded sizes, screens fit the window, server-side permissions, help docs |
 | `design-system` | Standardizing the frontend: one palette, type scale, chart setup, codemod + lint guard, pixel diffs |
 | `llm-agents` | Agents and prompts: agnostic loop, judgement in prompts, real names, agents that doubt |
-| `llm-providers` | Routes, reasoning effort/thinking, model comparisons, all providers working |
-| `dependency-bumps` | Bumps and security sweeps: read what's new, quarantine, isolated trial, real-data diff, every provider |
+| `llm-providers` | Routes, reasoning effort, model comparisons, every provider working |
+| `dependency-bumps` | Bumps and security sweeps: read what's new, quarantine, isolated trial, real-data diff |
 | `measure-before-claiming` | Any accuracy, cost or "it's identical" claim |
-| `verify-in-browser` | Visual constraints and logged-in screens, checked with Playwright on the real frontend |
+| `verify-in-browser` | Visual constraints and logged-in screens, checked in a real browser |
 | `test-accounts` | Permission matrix users, test data, realistic load |
-| `security-review` | Auth, agent SQL/code, fetching, uploads, secrets: executor-enforced blocks, audit method |
+| `security-review` | Auth, agent SQL/code, fetching, uploads, secrets |
 | `adversarial-review` + `adversarial-verifier` agent | Before "done": reviewers, refuters, second-model pass |
-| `artifacts` | Shared pages: real examples, many charts, several versions, living fix lists, specs for other owners |
-| `release-flow` | Pushing across repos: shared library first, then pins; quarantine; client plugins on a branch + PR |
-| `capture-feedback` | Turns your own corrections into memories, and stable ones into this plugin |
+| `artifacts` | Shared pages: real examples, many charts, several versions, living fix lists |
+| `release-flow` | Pushing across repos: shared library first, then pins; quarantine; client plugins on a branch |
+| `capture-feedback` | Turns your corrections into rules |
 
-## Results
+### What it doesn't carry
 
-What this way of working has produced so far:
+Project facts (ports, containers, test tokens) go in each repo's `CLAUDE.md`. Your own decisions build up in your own Claude memory. The plugin is the starting point; your complaints make it yours.
 
-- **Security holes found before clients did.** Permission bypasses in agent SQL, server file reads through model-written queries, and weak spots in auth. Each one was reproduced as a low-permission user, then fixed with a test or handed to its owner as a spec.
-- **Bugs tests didn't see.** The second-model review keeps finding races and lost updates in concurrent code.
-- **Claims that hold.** Running on all the data instead of a few examples has overturned optimistic numbers before they reached users.
-- **Root causes, not patches.** Rate-limit errors were fixed by cutting request volume at the source, not by adding retries.
-- **Safer dependencies.** Security advisories dropped sharply with every bump checked on real data and on every provider. The quarantine kept a supply-chain incident away.
-- **A consistent frontend.** Sizes and colours live in one place with lint guards, and screens share the same components.
-- **Less rework.** Corrections become rules, so the same mistake doesn't come back.
+</details>
 
-## Growing it
-
-When Claude gets corrected, `capture-feedback` saves the rule with its reason. Rules that hold across projects get promoted here by PR.
-
-## Rules for you (not for the AI) · Reglas para vos (no para la IA)
-
-This isn't a skill. It's for the person working with the AI.
-
-**English**
-
-1. **Argue with everything.** Question everything until you're happy.
-2. **Ask yourself if you're happy with the result it's giving you.** You have to be happy with the process you're having, and want to work that way all day long.
-3. **Never forget that users are idiots.** They will always do the worst possible thing to ruin your life.
-
-**Español**
-
-1. **Discutile todo.** Cuestionale todo, hasta que estés contento.
-2. **Preguntate si estás contento con el resultado que te está dando.** Tenés que ser feliz con el proceso que estás teniendo, y tener ganas de trabajar todo el día de ese modo.
-3. **Nunca te olvides de que los usuarios son idiotas.** Siempre van a hacer lo peor posible para joderte la vida.
+[^einstein]: He probably never said it. See "doubt everything".
