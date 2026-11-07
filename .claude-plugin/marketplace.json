@@ -1,11 +1,11 @@
 {
   "name": "grimoire",
-  "owner": { "name": "pier" },
+  "owner": { "name": "Martin Pierangeli" },
   "plugins": [
     {
       "name": "grimoire",
       "source": "./plugins/grimoire",
-      "description": "pier's way of working with Claude Code: working agreement, code style, testing, UI, LLM-agent design, adversarial review."
+      "description": "How Martin works with Claude Code at Q99: rules, workflows and review habits for Q99 developers."
     }
   ]
 }

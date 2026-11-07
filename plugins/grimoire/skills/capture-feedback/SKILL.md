@@ -5,18 +5,24 @@ description: Use when the user corrects how you work, rejects an approach, or co
 
 # Capture feedback as rules
 
-This is how the rules in this plugin were made. Every correction becomes a rule that is applied automatically after that.
+Every rule in this plugin started as a correction. Saving it with its reason means it is never needed twice.
 
-When the user corrects you ("don't do X", "why not Y?", "never…") or approves a non-obvious choice:
+When the user corrects you ("don't do X", "why not Y?", "never…") or approves a non-obvious choice, save a memory:
 
-1. Save a memory (or propose a rule for this plugin) in this shape:
+```
+---
+name: <short-kebab-slug>
+description: <one line, used to decide relevance>
+metadata:
+  type: feedback
+---
+<the rule, one or two sentences, with the user's words if short>
 
-   ```
-   <the rule, one or two sentences>
+**Why:** what happened. The reason lets the rule be applied with judgement.
+**How to apply:** concrete triggers and the exact alternative.
+```
 
-   **Why:** what happened, and the user's words if short. The reason lets the rule be applied with judgement, not mechanically.
-   **How to apply:** concrete triggers and the exact alternative to use.
-   ```
-2. One fact per rule. Update an existing rule rather than duplicating it; delete rules that turn out wrong.
-3. Separate **generic** rules (style, testing, process: they belong in this plugin) from **project facts** (they belong in the repo's CLAUDE.md).
-4. Periodically promote stable generic memories into this plugin via PR.
+- One fact per file; a one-line pointer in `MEMORY.md`. Update an existing rule rather than duplicating; delete rules that turn out wrong.
+- Date relative words ("today" → the date).
+- Generic rules (style, process, testing) belong in this plugin; project facts (ports, containers, tables) in the repo's `CLAUDE.md` or project memory.
+- Promote stable generic memories into this plugin by PR.

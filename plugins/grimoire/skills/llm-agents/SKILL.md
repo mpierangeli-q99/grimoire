@@ -1,29 +1,34 @@
 ---
 name: llm-agents
-description: Use when designing or changing LLM agents, tools, prompts, extraction schemas, model routing or agent-generated documents.
+description: Use when designing or changing LLM agents, tools, prompts, schemas, model routing or agent output.
 ---
 
 # LLM agents & prompts
 
 ## Layering
-- **Agents sit below flows.** An agent emits a flat, honest event contract (tool_start/tool_result/token/done). Presentation (nesting, grouping, citation format) is the flow/streaming layer's job.
-- **An agent interprets only concepts it is a stakeholder in** (e.g. sources it accumulates). Everything else in tool metadata is forwarded unread.
-- **Neutral vocabulary.** Name agent params for what they *do* (`inline_citations: bool`), never what they're *for* (`mode="report"`).
-- **Tool output is observation, not a control channel.** No hand-holding text appended to results.
-- **Step labels come from the model's own one-line reason** or the actual argument (the query), verbatim, never regex-chopped.
+- **The agent loop stays agnostic.** No feature code in the loop; a tool that needs something carried adds a generic field to its result.
+- **Agent memory travels in tool results**, visible in history. Never put one agent's private state in shared structures (session, conversation).
+- Tool output is observation, not a control channel. Step labels come from the model's own reason or the real argument.
+- **Tool names by scope**: `<feature>_<object>`; labels are the user's words for the action, never a backend name.
 
-## Schemas & prompts
-- **Closed schemas over dynamic lists.** Ask for specific named fields (required-nullable). No attribute/value indirection or generated models. Too big for the grammar → split into more agents.
-- **Briefs never steer to specific documents.** State *what* to extract; search finds *where*.
-- **Language lives in one place** (config), never repeated in briefs.
-- **Structured emission without thinking.**
+## Let the model judge
+- **No code gates on judgment.** Don't decide with counters ("≥ 3 tool calls"); put the criteria in the prompt. Code enforces only facts.
+- **Agents see real names.** Give the full list of real names (tables, documents, tags) with descriptions plus a tool that opens one by exact name. No word-splitting regex search in between.
+- **Thresholds are tool parameters.** The user's value wins; if it changes the answer a lot, the agent asks; otherwise it picks from the data and says which. Statistical cuts validated on real data stay in the tool; the agent never lowers one to find something.
+- **Agents doubt before explaining.** Tools return data-specific doubts (what could make the result wrong, which record would confirm it). The agent confirms with a second source and grades findings. Re-running the same call is not verification.
 
-## Output honesty
-- **Integrate declared values verbatim** ("near 450 m", not "the target zone").
-- **Show discrepancies in place, as plain prose:** "5 blades, another source says 6". No glyphs, filenames or JSON.
-- **Render whatever exists.** Each sub-block renders on its own; the empty message only if nothing rendered. "Searched, found nothing" ≠ "pending".
+## Prompts
+- Write instructions in positive form.
+- Language: models follow the user's language already. It breaks when the engine sends its own English text as `role=user`; fix it there. Engine notices are English; generated content follows the configured language.
+- Plain words by default; real table/column names and SQL only when the user asks technically. Internal tool names never.
+- Closed schemas with named required-nullable fields; optional `x?` fields loop structured output.
 
-## Models
-- **Exact pins, never `*-latest` aliases.** They re-point with no diff.
-- **Model swaps are the human's call.** They carry behaviour changes (structured-output gates, envelopes), not just cost and quality. Bring evidence, recommend, wait.
-- Spreadsheets in retrieval: prefer grep over vector search.
+## Sources and output
+- Sources come from what tools returned, not from what the model cites. Citations resolve only against that list.
+- Web answers without source links fall back to a search that has them.
+- Exports draw charts or show tables; never raw JSON.
+- Integrate declared values verbatim; show discrepancies as plain prose.
+
+## Models and providers
+- Exact model pins. Swaps are the human's call, with evidence.
+- Direct providers (Anthropic, OpenAI, Gemini, Azure) must work fully; a proxy that can't carry a feature skips it.

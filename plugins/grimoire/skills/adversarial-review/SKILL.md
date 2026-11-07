@@ -1,18 +1,22 @@
 ---
 name: adversarial-review
-description: Use before declaring non-trivial work done, or when asked to review a diff/PR — independent reviewers find issues, then adversarial verifiers try to refute each one.
+description: Use before declaring any non-trivial change round done, or when asked to review a diff/PR — independent reviewers, a verifier that tries to refute each finding, and a second-model pass.
 ---
 
 # Adversarial review
 
-The goal is findings that survive an attempt to kill them.
+Findings must survive an attempt to kill them. Run this at the end of every change round, before saying "done".
 
-1. **Scope**: the uncommitted diff (`git diff`) or the PR. Read the rules in `code-style`, `testing-rules`, `frontend-ui`, `llm-agents` that apply.
-2. **Fan out independent reviewers in parallel**, one per dimension (correctness/bugs, house rules, simplification, security if relevant). Give them the **code, not your conclusion**. A reviewer handed your hypothesis returns it confirmed.
-3. **Verify each finding with the `adversarial-verifier` agent**, whose job is to *disprove* it with a concrete trace. Keep only CONFIRMED (and clearly-labelled PLAUSIBLE) findings.
-4. **Report** findings ranked by severity, each with a concrete failure scenario (input/state → wrong output). No style nits dressed as bugs.
-5. **Don't apply fixes** until the human picks which ones (see `working-agreement`).
+1. **Scope**: your files in the uncommitted diff (other sessions' hunks are not yours).
+2. **Self-check against the rules**: `code-style` (the cleanup guide), `testing-rules`, `frontend-ui`, `llm-agents`, `security-review`.
+3. **Independent reviewers in parallel**, one per dimension (correctness, house rules, security, simplification). Give them the **code, not your conclusion** — a reviewer handed your hypothesis returns it confirmed. Read-only agents.
+4. **Verify each finding** with the `adversarial-verifier` agent: it tries to disprove it with a concrete trace. Keep CONFIRMED; label PLAUSIBLE.
+5. **Second model.** Send a bundle to a different-vendor model at high reasoning effort:
+   - the diff of your files, the current version of the key files, a short brief of the intent and of what earlier rounds fixed;
+   - ask for races, lost updates, permission holes, wrong edge cases — concrete failure scenarios only.
+   Check each answer against the code. Fix the real ones with tests. Report which you accepted and which you rejected, and why. Run a second pass when the fixes were non-trivial.
+6. **Report** ranked by severity, each with input/state → wrong result. No style nits dressed as bugs.
+7. **Don't apply review fixes** the human hasn't picked, unless they are clear bugs in your own round.
 
-For UI changes, add a reviewer that drives the real app with Playwright at 1366×768 and 1536×864.
-
-Built-in helpers that pair well: `/code-review <level>`, `/simplify`, `/security-review`.
+For UI changes add a reviewer that drives the real app (see `verify-in-browser`).
+Built-ins that pair well: `/code-review`, `/simplify`, `/security-review`.
