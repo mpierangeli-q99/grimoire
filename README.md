@@ -9,22 +9,51 @@ Martin's way of working with Claude Code, packed as a plugin so every Q99 develo
 /plugin install grimoire@grimoire
 ```
 
-The skills load by themselves when the task matches. Project facts (ports, containers, tables) stay in each repo's `CLAUDE.md`.
+The skills load by themselves when the task matches.
 
-## The way of working, in short
+A short `SessionStart` hook adds the few rules that must always apply (one item at a time, name your picks, commit only when asked; see `plugins/grimoire/hooks/session-start.md`) to every session. To turn it off, disable the plugin with `/plugin`.
 
-1. **One item at a time.** Big work becomes a numbered checklist. Claude proposes the next item, you approve, it does it, you check, it ticks the list. "continue" means go to the next one.
-2. **You decide, Claude says what it decided.** UX trade-offs, model swaps, version pins and domain rules are yours. Every number or variant Claude picked on its own is listed as "decisions I made".
-3. **Change only what was flagged.** A complaint about the texts changes the texts, not the visuals.
-4. **Read the docs, try it apart, then merge.** Docs and changelogs before code; prototype in a scratchpad on real data, then bring it into the repo.
-5. **Respect what exists.** Before building a filter, header, tile or nav, find the app's own and reuse it; new pieces become shared components in the same theme.
-6. **Smallest version first.** Use the existing seam and maintained libraries ("import X and use X"). No single-use helpers, no history in comments.
-7. **Measure before claiming.** Research runs on real data from the local test database, on all entities, outside the client's own data too, with before/after comparisons. 1–2 runs per case; more cases, not more repeats.
-8. **Show it on a page.** Audits, plans and proposals become artifacts with real examples, many charts and 2–4 versions side by side.
-9. **Verify in a real browser.** Logged in with a minted token, in light, dark and phone width. Nothing unrendered gets called "works".
-10. **Test as real users.** A matrix of test accounts, one permission apart. Load tests use several users.
-11. **Adversarial review at the end of every round.** Independent reviewers get the code, not your conclusion. A verifier tries to refute each finding, and a second vendor's model reviews the diff.
-12. **Commit only when asked.** Changes stay as a diff to read. Never touch a shared git index, never push for someone else. Push q99-utils first, then bump the pins; client plugins go through a branch + PR.
+## How Martin works
+
+Read this before the skills. The skills hold the rules; this section explains the stance behind them, so you can apply them with judgement instead of mechanically.
+
+### The stance
+
+Claude works like a senior engineer on the team. It reads widely, proposes, measures and does the work. **The developer keeps the decisions.** Claude never takes a product, UX or architecture call silently, and whatever it did decide on its own, it says so. The developer reads every diff before it becomes a commit.
+
+Speed comes from not redoing work. Doing less at a time is how you get there: one item, checked, then the next.
+
+### A normal round
+
+1. **Ask, and let Claude read first.** Claude reads the docs and the changelogs of what it will touch, plus the existing code. It does that before proposing anything.
+2. **Get a plan as a list.** Big work becomes a numbered checklist, often on an artifact page with real examples and, for anything visual, 2–4 versions side by side. You pick.
+3. **One item at a time.** Claude does one item, you check it, and the list gets ticked. "continue" means the last one was fine, do the next.
+4. **Try it apart, then merge.** New ideas are prototyped in a scratchpad, a scratch environment or a side container, on real data. Only when they work do they reach the repo.
+5. **Verify for real.** Run the touched tests and render the screen in a real browser. Test with users that have the right permissions, and measure on all the data. Claude never calls "works" what it didn't run or render.
+6. **Adversarial review.** At the end of the round, independent reviewers look for bugs and a verifier tries to refute each finding. A model from another vendor then reviews the diff. Real findings get fixed with tests.
+7. **Report.** Claude reports what changed, what was checked with results, what it did not check, and a "decisions I made" line for every number or variant you didn't choose.
+8. **Commit when you say so.** Claude commits grouped by area, on the repo's convention. You push.
+
+### Why the rules exist
+
+Each rule came from a real correction. A few examples, so the reasons are clear:
+
+- **"Change only what was flagged."** The feedback was "I don't like the texts" on a landing page. Claude rebuilt the visuals too, and the visuals were the part that was loved. Read complaints literally, and keep the version that got the reaction.
+- **"Name your own picks."** "Who said a limit of 40 per user? I said queue the runs." Claude had swapped the idea for its own variant and reported it as approved.
+- **"UX trade-offs are the developer's call."** To fix a nav overflow, Claude made the rail icon-only. The discussion that followed produced a better design than either version had.
+- **"Measure on all the data."** A method that was "within 10%" on 4 hand-picked examples held on fewer than a quarter of the full set.
+- **"Cut volume, not retries."** Rate-limit errors got a retry with backoff, and it was rejected at once: "why are we hitting the limit?" One read-merge-write per item was the cause.
+- **"The executor blocks, not our check."** Our own SQL validator was the only thing stopping a model-written query from reading server files. "Impossible" has to mean the engine itself refuses.
+- **"Respect what exists."** A tile on one dashboard looked different from the same tile on another. Users read drift as unfinished work.
+- **"Smallest version first."** A 90-line custom retry transport was replaced by 20 lines around the library: "is all that machinery necessary?"
+- **"No history in comments."** Rationale paragraphs in docstrings made the code harder to read. Reasons belong in the commit.
+
+### What the plugin doesn't carry
+
+- **Project facts** (ports, containers, how to mint a test token, which service to restart) go in each repo's `CLAUDE.md`.
+- **Your own decisions** ("don't re-propose X", "I test the chat myself") build up in your Claude memory through `capture-feedback`.
+
+The plugin is the starting point. Your corrections make it yours.
 
 ## Skills
 

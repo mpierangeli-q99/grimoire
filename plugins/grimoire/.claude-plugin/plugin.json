@@ -1,6 +1,6 @@
 {
   "name": "grimoire",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "How Martin works with Claude Code at Q99: one item at a time, the human decides, measured claims, adversarial review, real-browser checks, test accounts, security, bumps.",
   "author": { "name": "Martin Pierangeli" }
 }
