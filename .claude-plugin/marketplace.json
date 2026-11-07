@@ -1,0 +1,11 @@
+{
+  "name": "grimoire",
+  "owner": { "name": "pier" },
+  "plugins": [
+    {
+      "name": "grimoire",
+      "source": "./plugins/grimoire",
+      "description": "pier's way of working with Claude Code: working agreement, code style, testing, UI, LLM-agent design, adversarial review."
+    }
+  ]
+}
