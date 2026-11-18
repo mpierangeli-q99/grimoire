@@ -199,7 +199,7 @@ The skills load by themselves when the task matches. A short `SessionStart` hook
 | `verify-in-browser` | Visual constraints and logged-in screens, checked in a real browser |
 | `test-accounts` | Permission matrix users, test data, realistic load |
 | `security-review` | Auth, agent SQL/code, fetching, uploads, secrets |
-| `adversarial-review` + `adversarial-verifier` agent | Before "done": reviewers, refuters, second-model pass |
+| `adversarial-review` + `adversarial-verifier` agent | Before "done": reviewers, refuters, second-model pass. Someone else's PR: the branch run on a copy of real data |
 | `artifacts` | Shared pages: real examples, many charts, several versions, living fix lists |
 | `release-flow` | Pushing across repos: shared library first, then pins; quarantine; client plugins on a branch |
 | `capture-feedback` | Turns your corrections into rules |
