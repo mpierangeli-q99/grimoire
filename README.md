@@ -191,6 +191,7 @@ The skills load by themselves when the task matches. A short `SessionStart` hook
 | `code-style` | Writing or cleaning code: the cleanup guide, libraries, licences, errors, data rules |
 | `testing-rules` | Tests: contracts not copy, no model names, no tests for switches, targeted runs |
 | `frontend-ui` | UI: respect what exists, no hardcoded sizes, screens fit the window, server-side permissions, help docs |
+| `modern-web-guidance` | Any HTML, CSS or browser-side JS: Google Chrome's current web-platform guides, searched before writing (Apache-2.0, unchanged) |
 | `design-system` | Standardizing the frontend: one palette, type scale, chart setup, codemod + lint guard, pixel diffs |
 | `llm-agents` | Agents and prompts: agnostic loop, judgement in prompts, real names, agents that doubt |
 | `llm-providers` | Routes, reasoning effort, model comparisons, every provider working |
