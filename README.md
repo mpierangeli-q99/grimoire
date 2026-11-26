@@ -192,6 +192,7 @@ The skills load by themselves when the task matches. A short `SessionStart` hook
 | `testing-rules` | Tests: contracts not copy, no model names, no tests for switches, targeted runs |
 | `frontend-ui` | UI: respect what exists, no hardcoded sizes, screens fit the window, server-side permissions, help docs |
 | `modern-web-guidance` | Any HTML, CSS or browser-side JS: Google Chrome's current web-platform guides, searched before writing (Apache-2.0, unchanged) |
+| `answer-first` | Always on (session hook), "normal mode" turns it off for the session: answer or next action first, numbered steps, state each turn, no preamble or closers (adapted from ayghri/i-have-adhd, MIT) |
 | `design-system` | Standardizing the frontend: one palette, type scale, chart setup, codemod + lint guard, pixel diffs |
 | `llm-agents` | Agents and prompts: agnostic loop, judgement in prompts, real names, agents that doubt |
 | `llm-providers` | Routes, reasoning effort, model comparisons, every provider working |
